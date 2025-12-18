@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   Users,
   BarChart3,
@@ -20,7 +21,51 @@ import {
   Clock,
 } from "lucide-react";
 
-// ... existing code ...
+const stats = [
+  { label: "Active Users", value: "12K+" },
+  { label: "Subscribers Managed", value: "2.4M" },
+  { label: "Open Rate", value: "48%" },
+  { label: "Growth", value: "+22%" },
+];
+
+const recentUsers = [
+  { name: "Sarah Chen", role: "Tech Writer", avatar: "https://i.pravatar.cc/150?u=sarah" },
+  { name: "Marcus Miller", role: "Business Strategist", avatar: "https://i.pravatar.cc/150?u=marcus" },
+  { name: "Elena Rodriguez", role: "Lifestyle Blogger", avatar: "https://i.pravatar.cc/150?u=elena" },
+];
+
+const features = [
+  {
+    title: "Advanced Segmentation",
+    description: "Group your readers by behavior, interests, and engagement levels automatically.",
+    icon: Users,
+  },
+  {
+    title: "Growth Analytics",
+    description: "Deep dive into your subscriber acquisition and retention metrics in real-time.",
+    icon: BarChart3,
+  },
+  {
+    title: "Automated Outreach",
+    description: "Send personalized follow-ups and re-engagement campaigns without lifting a finger.",
+    icon: MessageSquare,
+  },
+  {
+    title: "Smart Automations",
+    description: "Connect your Substack with 1000+ tools via our robust API and Zapier integration.",
+    icon: Zap,
+  },
+  {
+    title: "Revenue Tracking",
+    description: "Understand exactly which pieces of content are driving the most paid conversions.",
+    icon: TrendingUp,
+  },
+  {
+    title: "Custom Personas",
+    description: "AI-powered reader profiles that help you write content that actually resonates.",
+    icon: Target,
+  },
+];
 
 const FloatingWidget = ({ children, className, delay = 0 }: { children: React.ReactNode, className: string, delay?: number }) => (
   <motion.div
