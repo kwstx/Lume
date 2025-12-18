@@ -75,14 +75,18 @@ export default function HomePage() {
           </div>
 
           <nav className="hidden md:flex items-center gap-1 bg-secondary/60 rounded-full px-1 py-1">
-            {["Features", "Pricing", "About", "Contact"].map((item) => (
-              <button
-                key={item}
-                className="px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-background"
-              >
-                {item}
-              </button>
-            ))}
+            <Link href="#features" className="px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-background">
+              Features
+            </Link>
+            <Link href="/pricing" className="px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-background">
+              Pricing
+            </Link>
+            <Link href="/about" className="px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-background">
+              About
+            </Link>
+            <Link href="/contact" className="px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-background">
+              Contact
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -197,7 +201,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-24 px-6 bg-gradient-to-b from-transparent to-secondary/20">
+        <section id="features" className="py-24 px-6 bg-gradient-to-b from-transparent to-secondary/20">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
