@@ -100,96 +100,6 @@ export default function HomePage() {
           <div className="absolute inset-0 rounded-full border border-violet-500/[0.09] scale-[1.0]" />
         </div>
 
-        {/* Floating Widgets - Positioned relative to the arcs */}
-        <FloatingWidget className="top-[25%] left-[15%]" delay={0.2}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 flex flex-col gap-1 w-32">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Rate</span>
-              <Clock className="w-3 h-3 text-violet-500" />
-            </div>
-            <div className="text-lg font-bold">+31%</div>
-            <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
-              <div className="h-full w-[31%] bg-violet-500" />
-            </div>
-          </div>
-        </FloatingWidget>
-
-        <FloatingWidget className="top-[45%] left-[22%]" delay={0.4}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-2.5 rounded-xl shadow-xl shadow-violet-500/5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-              <Target className="w-5 h-5 text-white" />
-            </div>
-          </div>
-        </FloatingWidget>
-
-        <FloatingWidget className="top-[65%] left-[10%]" delay={0.6}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 w-40">
-            <div className="text-[10px] font-medium text-muted-foreground mb-1 uppercase tracking-wider">Traffic</div>
-            <div className="flex items-end gap-2 mb-2">
-              <span className="text-lg font-bold">1.57K</span>
-              <span className="text-[10px] text-green-500 font-medium mb-1">+12%</span>
-            </div>
-            <div className="flex items-end gap-1 h-8">
-              {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
-                <div key={i} className="flex-1 bg-violet-200 rounded-t-sm" style={{ height: `${h}%` }} />
-              ))}
-            </div>
-          </div>
-        </FloatingWidget>
-
-        <FloatingWidget className="top-[20%] right-[15%]" delay={0.3}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-2 rounded-xl shadow-xl shadow-violet-500/5 flex items-center gap-3">
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="w-1 bg-violet-400 rounded-full" style={{ height: `${10 + Math.random() * 20}px` }} />
-              ))}
-            </div>
-            <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
-              <Activity className="w-5 h-5 text-blue-600" />
-            </div>
-          </div>
-        </FloatingWidget>
-
-        <FloatingWidget className="top-[50%] right-[20%]" delay={0.5}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 flex flex-col items-center gap-1">
-            <div className="relative w-12 h-12">
-              <svg className="w-full h-full" viewBox="0 0 36 36">
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" strokeWidth="3" />
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#8b5cf6" strokeWidth="3" strokeDasharray="53, 100" />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold">53%</div>
-            </div>
-            <span className="text-[9px] font-medium text-muted-foreground uppercase">Progress</span>
-          </div>
-        </FloatingWidget>
-
-        <FloatingWidget className="top-[75%] right-[12%]" delay={0.7}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 w-36">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-medium text-muted-foreground uppercase">Data Loading</span>
-              <span className="text-[10px] font-bold text-violet-600">14%</span>
-            </div>
-            <div className="space-y-1.5">
-              <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
-                <div className="h-full w-[14%] bg-violet-500" />
-              </div>
-              <div className="h-1 w-[80%] bg-secondary rounded-full" />
-              <div className="h-1 w-[60%] bg-secondary rounded-full" />
-            </div>
-          </div>
-        </FloatingWidget>
-
-        <FloatingWidget className="bottom-[10%] left-1/2 -translate-x-1/2" delay={0.8}>
-          <div className="bg-white/80 backdrop-blur-md border border-border p-4 rounded-2xl shadow-xl shadow-violet-500/5 w-64">
-            <div className="text-[10px] font-medium text-muted-foreground mb-3 uppercase tracking-wider">Product Data</div>
-            <div className="flex items-end gap-2 h-20">
-              {[30, 60, 40, 80, 50, 90, 70, 45, 65, 35].map((h, i) => (
-                <div key={i} className="flex-1 bg-gradient-to-t from-violet-500 to-purple-400 rounded-t-md" style={{ height: `${h}%` }} />
-              ))}
-            </div>
-          </div>
-        </FloatingWidget>
-
         {/* Gradient Glows */}
 
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[120px] -z-10" />
@@ -236,8 +146,87 @@ export default function HomePage() {
       </header>
 
       <main>
-        <section className="pt-32 pb-20 px-6">
-          <div className="max-w-6xl mx-auto">
+        <section className="pt-32 pb-20 px-6 relative overflow-visible">
+          <div className="max-w-6xl mx-auto relative">
+            {/* Floating Widgets - Positioned around the hero text */}
+            <FloatingWidget className="-left-12 top-[10%]" delay={0.2}>
+              <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 flex flex-col gap-1 w-32">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Rate</span>
+                  <Clock className="w-3 h-3 text-violet-500" />
+                </div>
+                <div className="text-lg font-bold">+31%</div>
+                <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
+                  <div className="h-full w-[31%] bg-violet-500" />
+                </div>
+              </div>
+            </FloatingWidget>
+
+            <FloatingWidget className="-left-24 top-[40%]" delay={0.4}>
+              <div className="bg-white/80 backdrop-blur-md border border-border p-2.5 rounded-xl shadow-xl shadow-violet-500/5">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            </FloatingWidget>
+
+            <FloatingWidget className="-left-8 top-[70%]" delay={0.6}>
+              <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 w-40">
+                <div className="text-[10px] font-medium text-muted-foreground mb-1 uppercase tracking-wider">Traffic</div>
+                <div className="flex items-end gap-2 mb-2">
+                  <span className="text-lg font-bold">1.57K</span>
+                  <span className="text-[10px] text-green-500 font-medium mb-1">+12%</span>
+                </div>
+                <div className="flex items-end gap-1 h-8">
+                  {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
+                    <div key={i} className="flex-1 bg-violet-200 rounded-t-sm" style={{ height: `${h}%` }} />
+                  ))}
+                </div>
+              </div>
+            </FloatingWidget>
+
+            <FloatingWidget className="-right-12 top-[5%]" delay={0.3}>
+              <div className="bg-white/80 backdrop-blur-md border border-border p-2 rounded-xl shadow-xl shadow-violet-500/5 flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="w-1 bg-violet-400 rounded-full" style={{ height: `${10 + Math.random() * 20}px` }} />
+                  ))}
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                  <Activity className="w-5 h-5 text-blue-600" />
+                </div>
+              </div>
+            </FloatingWidget>
+
+            <FloatingWidget className="-right-20 top-[35%]" delay={0.5}>
+              <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 flex flex-col items-center gap-1">
+                <div className="relative w-12 h-12">
+                  <svg className="w-full h-full" viewBox="0 0 36 36">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" strokeWidth="3" />
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#8b5cf6" strokeWidth="3" strokeDasharray="53, 100" />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold">53%</div>
+                </div>
+                <span className="text-[9px] font-medium text-muted-foreground uppercase">Progress</span>
+              </div>
+            </FloatingWidget>
+
+            <FloatingWidget className="-right-10 top-[65%]" delay={0.7}>
+              <div className="bg-white/80 backdrop-blur-md border border-border p-3 rounded-xl shadow-xl shadow-violet-500/5 w-36">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-medium text-muted-foreground uppercase">Data Loading</span>
+                  <span className="text-[10px] font-bold text-violet-600">14%</span>
+                </div>
+                <div className="space-y-1.5">
+                  <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full w-[14%] bg-violet-500" />
+                  </div>
+                  <div className="h-1 w-[80%] bg-secondary rounded-full" />
+                  <div className="h-1 w-[60%] bg-secondary rounded-full" />
+                </div>
+              </div>
+            </FloatingWidget>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
