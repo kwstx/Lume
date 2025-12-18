@@ -64,7 +64,25 @@ const features = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/30">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Background Designs */}
+      <div className="absolute inset-0 z-0">
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        
+        {/* Concentric Arcs */}
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] pointer-events-none">
+          <div className="absolute inset-0 rounded-full border border-violet-500/[0.03] scale-[0.6]" />
+          <div className="absolute inset-0 rounded-full border border-violet-500/[0.05] scale-[0.8]" />
+          <div className="absolute inset-0 rounded-full border border-violet-500/[0.07] scale-[1.0]" />
+          <div className="absolute inset-0 rounded-full border border-violet-500/[0.09] scale-[1.2]" />
+        </div>
+
+        {/* Gradient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] -z-10" />
+      </div>
+
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
