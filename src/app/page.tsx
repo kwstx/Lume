@@ -344,90 +344,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-32 px-6 relative overflow-hidden">
-          <div className="max-w-6xl mx-auto relative">
-            {/* Background Glows */}
-            <div className="absolute -top-24 -left-24 w-96 h-96 bg-violet-500/10 rounded-full blur-[100px] -z-10" />
-            <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] -z-10" />
-
+        <section className="py-24 px-6 relative overflow-hidden">
+          <div className="max-w-6xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative bg-black rounded-[3rem] p-12 md:p-24 text-center overflow-hidden border border-white/10"
+              className="relative bg-gradient-to-br from-violet-600 to-purple-700 rounded-[3rem] p-12 md:p-24 text-center overflow-hidden shadow-2xl shadow-violet-200/50"
             >
-              {/* Premium Mesh Gradient Background */}
-              <div className="absolute inset-0 opacity-40">
-                <div className="absolute inset-0 bg-gradient-to-tr from-violet-900/40 via-transparent to-transparent" />
-                <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_100%_0%,rgba(124,58,237,0.15),transparent_50%)]" />
-                <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_0%_100%,rgba(139,92,246,0.15),transparent_50%)]" />
-              </div>
-
-              {/* Grid Pattern Overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-              {/* Floating UI Elements for Premium feel */}
-              <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-12 left-12 hidden lg:block"
-              >
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-violet-500/20 flex items-center justify-center">
-                      <TrendingUp className="w-4 h-4 text-violet-400" />
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Growth</div>
-                      <div className="text-sm font-bold text-white">+24%</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-12 right-12 hidden lg:block"
-              >
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                      <Users className="w-4 h-4 text-blue-400" />
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Active</div>
-                      <div className="text-sm font-bold text-white">1,284</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <div className="relative z-10 max-w-2xl mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 text-white/80 px-4 py-1.5 rounded-full text-xs font-medium mb-8"
-                >
-                  <Sparkles className="w-3 h-3 text-violet-400" />
-                  <span>Join 2,000+ top Substack writers</span>
-                </motion.div>
-
-                <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
-                  Ready to understand your <span className="bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">readers?</span>
+              {/* Inner Shadows */}
+              <div className="absolute inset-0 shadow-[inset_0_2px_40px_rgba(0,0,0,0.1),inset_0_0_100px_rgba(0,0,0,0.1)] pointer-events-none" />
+              
+              <div className="relative z-10 max-w-2xl mx-auto text-white">
+                <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-[1.1]">
+                  Ready to understand your readers?
                 </h2>
                 
-                <p className="text-white/60 text-lg md:text-xl mb-12 font-medium">
+                <p className="text-white/80 text-lg md:text-xl mb-12 font-medium">
                   Stop guessing and start growing. Get the deep insights you need to turn your newsletter into a business.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link href="/dashboard">
                     <Button
                       size="lg"
-                      className="h-14 rounded-full px-10 bg-white text-black hover:bg-gray-100 font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] shadow-xl"
+                      className="h-14 rounded-full px-10 bg-white text-violet-600 hover:bg-gray-100 font-bold transition-all"
                     >
                       Start Free Trial
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -436,7 +377,7 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="h-14 rounded-full px-10 bg-white/5 border-white/10 text-white hover:bg-white/10 font-bold transition-all duration-300"
+                    className="h-14 rounded-full px-10 border-white/20 text-white hover:bg-white/10 font-bold"
                   >
                     View Case Studies
                   </Button>
