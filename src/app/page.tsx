@@ -66,7 +66,7 @@ const DashboardPreview = () => (
     initial={{ opacity: 0, y: 40 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 0.5, duration: 0.8 }}
-    className="relative w-full max-w-5xl mx-auto mt-20"
+    className="relative w-full max-w-5xl mx-auto mt-8"
   >
     {/* Mac Window Container */}
     <div className="bg-white rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden">
@@ -299,25 +299,9 @@ export default function HomePage() {
                 Segment audiences, track engagement, and boost conversions—all in one place.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <div className="relative w-full sm:w-auto">
-                  <input
-                    type="email"
-                    placeholder="Enter your email to get started"
-                    className="w-full sm:w-96 h-12 pl-5 pr-32 rounded-full border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500"
-                  />
-                  <Button
-                    size="sm"
-                    className="absolute right-1.5 top-1.5 rounded-full px-5 bg-primary hover:bg-primary/90 text-primary-foreground"
-                  >
-                    Get Started
-                    <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <DashboardPreview />
+              <DashboardPreview />
           </div>
         </section>
 
