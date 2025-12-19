@@ -377,7 +377,7 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="h-14 rounded-full px-10 border-white/20 text-white hover:bg-white/10 font-bold"
+                    className="h-14 rounded-full px-10 border-white/20 text-white hover:bg-white/10 font-bold bg-transparent"
                   >
                     View Case Studies
                   </Button>
