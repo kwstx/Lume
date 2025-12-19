@@ -121,11 +121,20 @@ const DashboardPreview = () => (
                 {[45, 60, 40, 85, 65, 90, 75, 55, 80, 70, 95, 85].map((h, i) => (
                   <div key={i} className="flex-1 relative group">
                     <div 
-                      className={`w-full rounded-t-lg transition-all duration-500 bg-gradient-to-t ${
-                        i === 10 ? 'from-violet-600 to-violet-400' : 'from-gray-100 to-gray-50'
+                      className={`w-full rounded-t-lg transition-all duration-500 relative ${
+                        i === 10 ? 'bg-gradient-to-t from-violet-600 to-violet-400 shadow-[0_0_20px_rgba(139,92,246,0.3)]' : 'bg-gradient-to-t from-gray-100 to-gray-50'
                       } group-hover:from-violet-200 group-hover:to-violet-100`}
                       style={{ height: `${h}%` }}
-                    />
+                    >
+                      {/* Stripes overlay */}
+                      <div className="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,rgba(255,255,255,0.2)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.2)_50%,rgba(255,255,255,0.2)_75%,transparent_75%,transparent)] bg-[size:12px_12px] rounded-t-lg" />
+                    </div>
+                    {i === 10 && (
+                      <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur shadow-xl border border-gray-100 rounded-full px-4 py-2 whitespace-nowrap z-20 flex items-center gap-2">
+                        <span className="text-[10px] font-bold text-gray-900">$12,840</span>
+                        <span className="text-[10px] text-green-500 font-bold">+18%</span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -152,6 +161,16 @@ const DashboardPreview = () => (
                       <span className="text-[10px] font-medium text-gray-400">vs last month</span>
                     </div>
                   </div>
+                  {/* Realistic Sparkline */}
+                  <div className="flex items-end gap-1 h-12">
+                    {[30, 45, 35, 60, 50, 75, 65].map((h, i) => (
+                      <div 
+                        key={i} 
+                        className={`w-1.5 rounded-full transition-all duration-500 bg-blue-500 ${i === 5 ? 'opacity-100' : 'opacity-20'}`} 
+                        style={{ height: `${h}%` }} 
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
               <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-50 group hover:border-violet-100 transition-all">
@@ -168,6 +187,16 @@ const DashboardPreview = () => (
                       <span className="text-xs font-bold text-green-500">+4.2%</span>
                       <span className="text-[10px] font-medium text-gray-400">vs average</span>
                     </div>
+                  </div>
+                  {/* Realistic Sparkline */}
+                  <div className="flex items-end gap-1 h-12">
+                    {[40, 35, 55, 45, 65, 50, 80].map((h, i) => (
+                      <div 
+                        key={i} 
+                        className={`w-1.5 rounded-full transition-all duration-500 bg-violet-500 ${i === 6 ? 'opacity-100' : 'opacity-20'}`} 
+                        style={{ height: `${h}%` }} 
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
