@@ -106,39 +106,39 @@ export default function OutreachContent({ segments, history, templates }: Outrea
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900">Connect</h1>
-                    <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center border border-orange-200">
-                        <MessageSquare className="w-4 h-4 text-orange-600" />
+                <div>
+                    <div className="flex items-center gap-3">
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Connect</h1>
                     </div>
+                    <p className="text-sm text-gray-400 font-medium">Draft and send newsletters to your audience.</p>
                 </div>
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="w-full max-w-md bg-gray-100 p-1 rounded-2xl mb-8">
-                    <TabsTrigger value="compose" className="rounded-xl font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm">Compose</TabsTrigger>
-                    <TabsTrigger value="history" className="rounded-xl font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm">History</TabsTrigger>
-                    <TabsTrigger value="templates" className="rounded-xl font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm">Templates</TabsTrigger>
+                <TabsList className="w-full max-w-md bg-white border border-gray-100 p-1 rounded-full mb-8 shadow-sm">
+                    <TabsTrigger value="compose" className="rounded-full font-bold data-[state=active]:bg-black data-[state=active]:text-white px-6">Compose</TabsTrigger>
+                    <TabsTrigger value="history" className="rounded-full font-bold data-[state=active]:bg-black data-[state=active]:text-white px-6">History</TabsTrigger>
+                    <TabsTrigger value="templates" className="rounded-full font-bold data-[state=active]:bg-black data-[state=active]:text-white px-6">Templates</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="compose" className="space-y-6">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div className="lg:col-span-2 space-y-6">
-                            <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-3xl p-8 space-y-6">
+                            <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-8 space-y-6 border border-gray-100/50">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-gray-700">Subject Line</label>
+                                    <label className="text-sm font-bold text-gray-700 ml-1">Subject Line</label>
                                     <Input
                                         placeholder="E.g. Only 24 hours left..."
-                                        className="h-12 rounded-xl border-gray-200 bg-gray-50/50"
+                                        className="h-14 rounded-2xl border-gray-100 bg-gray-50/50 focus:bg-white transition-all text-base px-5"
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-gray-700">Message</label>
+                                    <label className="text-sm font-bold text-gray-700 ml-1">Message</label>
                                     <Textarea
                                         placeholder="Write your personalized message here..."
-                                        className="min-h-[300px] rounded-xl border-gray-200 bg-gray-50/50 resize-none p-4 text-base"
+                                        className="min-h-[400px] rounded-3xl border-gray-100 bg-gray-50/50 focus:bg-white resize-none p-6 text-base shadow-inner transition-all"
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
                                     />
@@ -148,43 +148,43 @@ export default function OutreachContent({ segments, history, templates }: Outrea
 
                         <div className="space-y-6">
                             {/* Settings Card */}
-                            <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-3xl p-6 space-y-6">
+                            <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-6 space-y-6 border border-gray-100/50">
                                 <div className="space-y-3">
-                                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Target Audience</label>
+                                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Target Audience</label>
                                     <Select value={selectedSegment} onValueChange={setSelectedSegment}>
-                                        <SelectTrigger className="h-12 rounded-xl border-gray-200 bg-gray-50/50 font-medium">
+                                        <SelectTrigger className="h-12 rounded-full border-gray-100 bg-gray-50/50 font-medium px-4">
                                             <SelectValue placeholder="Select audience" />
                                         </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="all">All Subscribers</SelectItem>
+                                        <SelectContent className="rounded-2xl">
+                                            <SelectItem value="all" className="rounded-xl cursor-pointer">All Subscribers</SelectItem>
                                             {segments.map(seg => (
-                                                <SelectItem key={seg.id} value={seg.id}>{seg.name}</SelectItem>
+                                                <SelectItem key={seg.id} value={seg.id} className="rounded-xl cursor-pointer">{seg.name}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Load Template</label>
+                                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Load Template</label>
                                     <Select onValueChange={handleLoadTemplate}>
-                                        <SelectTrigger className="h-12 rounded-xl border-gray-200 bg-gray-50/50 font-medium">
+                                        <SelectTrigger className="h-12 rounded-full border-gray-100 bg-gray-50/50 font-medium px-4">
                                             <SelectValue placeholder="Start from template..." />
                                         </SelectTrigger>
-                                        <SelectContent>
-                                            {templates.length === 0 && <span className="p-2 text-xs text-muted-foreground block">No templates saved.</span>}
+                                        <SelectContent className="rounded-2xl">
+                                            {templates.length === 0 && <span className="p-3 text-xs text-muted-foreground block text-center">No templates saved.</span>}
                                             {templates.map(t => (
-                                                <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>
+                                                <SelectItem key={t.id} value={t.id} className="rounded-xl cursor-pointer">{t.name}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
 
                                 <div className="pt-4 space-y-3">
-                                    <Button onClick={handleSend} disabled={isSending} className="w-full h-12 rounded-xl font-bold bg-black text-white shadow-lg shadow-black/10 hover:bg-gray-900 transition-all">
+                                    <Button onClick={handleSend} disabled={isSending} className="w-full h-12 rounded-full font-bold bg-black text-white shadow-lg shadow-black/10 hover:bg-gray-900 transition-all hover:scale-[1.02] active:scale-[0.98]">
                                         <Send className="w-4 h-4 mr-2" />
                                         {isSending ? "Sending..." : "Send Message"}
                                     </Button>
-                                    <Button onClick={handleSaveTemplate} variant="outline" className="w-full h-12 rounded-xl font-bold text-gray-600 border-gray-200 hover:bg-gray-50">
+                                    <Button onClick={handleSaveTemplate} variant="outline" className="w-full h-12 rounded-full font-bold text-gray-600 border-gray-100 hover:bg-gray-50 hover:text-gray-900">
                                         <Save className="w-4 h-4 mr-2" />
                                         Save as Template
                                     </Button>
@@ -195,34 +195,42 @@ export default function OutreachContent({ segments, history, templates }: Outrea
                 </TabsContent>
 
                 <TabsContent value="history" className="space-y-6">
-                    <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-3xl overflow-hidden p-6">
+                    <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] overflow-hidden p-8 border border-gray-100/50">
                         <div className="space-y-4">
                             {history.length === 0 ? (
-                                <p className="text-center text-gray-500 py-12">No messages sent yet.</p>
+                                <div className="text-center py-20 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
+                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                                        <Send className="w-5 h-5 text-gray-400" />
+                                    </div>
+                                    <p className="text-gray-500 font-medium">No messages sent yet.</p>
+                                </div>
                             ) : history.map((camp) => (
-                                <div key={camp.id} className="flex items-center justify-between p-4 rounded-2xl bg-gray-50/50 border border-gray-100 group">
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${camp.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-gray-200 text-gray-500'}`}>
+                                <div key={camp.id} className="flex items-center justify-between p-5 rounded-3xl bg-gray-50/30 border border-gray-50 hover:bg-gray-50 hover:border-gray-100 transition-all group">
+                                    <div className="flex items-center gap-5">
+                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${camp.status === 'completed' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
                                             {camp.status === 'completed' ? <CheckCircle className="w-5 h-5" /> : <Edit3 className="w-5 h-5" />}
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-gray-900">{camp.subject}</h4>
-                                            <p className="text-xs text-gray-400 font-medium flex gap-2">
-                                                <span>{new Date(camp.createdAt).toLocaleDateString()}</span>
-                                                <span>•</span>
-                                                <span className="capitalize">{camp.status}</span>
-                                            </p>
+                                            <h4 className="font-bold text-gray-900 text-lg mb-1">{camp.subject}</h4>
+                                            <div className="flex items-center gap-3">
+                                                <Badge variant="secondary" className="rounded-full bg-white border border-gray-100 text-gray-500 font-medium text-xs px-2.5">
+                                                    {new Date(camp.createdAt).toLocaleDateString()}
+                                                </Badge>
+                                                <Badge variant="secondary" className={`rounded-full border-none font-bold text-xs px-2.5 capitalize ${camp.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
+                                                    {camp.status}
+                                                </Badge>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-6">
                                         {camp.status === 'completed' && (
                                             <div className="text-right hidden md:block">
-                                                <p className="text-sm font-bold text-gray-900">{camp.sentCount || 0}</p>
-                                                <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Sent</p>
+                                                <p className="text-2xl font-bold text-gray-900 leading-none mb-1">{camp.sentCount || 0}</p>
+                                                <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Recipients</p>
                                             </div>
                                         )}
-                                        <Button size="icon" variant="ghost" className="h-8 w-8 text-gray-400 hover:text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleDelete(camp.id)}>
-                                            <Trash2 className="w-4 h-4" />
+                                        <Button size="icon" variant="ghost" className="h-10 w-10 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full opacity-0 group-hover:opacity-100 transition-all" onClick={() => handleDelete(camp.id)}>
+                                            <Trash2 className="w-5 h-5" />
                                         </Button>
                                     </div>
                                 </div>
@@ -234,25 +242,33 @@ export default function OutreachContent({ segments, history, templates }: Outrea
                 <TabsContent value="templates" className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {templates.map(tmpl => (
-                            <Card key={tmpl.id} className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-3xl p-6 relative group">
-                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                            <Card key={tmpl.id} className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2rem] p-6 relative group hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all border border-gray-100/50">
+                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Button size="icon" variant="ghost" className="h-8 w-8 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full" onClick={() => handleDelete(tmpl.id)}>
                                         <Trash2 className="w-4 h-4" />
                                     </Button>
                                 </div>
-                                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-blue-600">
-                                    <FileText className="w-5 h-5" />
+                                <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 text-blue-600">
+                                    <FileText className="w-6 h-6" />
                                 </div>
-                                <h4 className="font-bold text-gray-900 truncate pr-8">{tmpl.name}</h4>
-                                <p className="text-sm text-gray-500 mt-2 line-clamp-2">{tmpl.content}</p>
-                                <Button onClick={() => { setSubject(tmpl.subject); setContent(tmpl.content); setActiveTab("compose"); }} variant="secondary" className="w-full mt-4 rounded-xl font-bold bg-gray-100 hover:bg-gray-200">
+                                <h4 className="font-bold text-gray-900 truncate pr-8 text-lg mb-2">{tmpl.name}</h4>
+                                <div className="bg-gray-50 rounded-2xl p-4 mb-4 min-h-[80px]">
+                                    <p className="text-sm text-gray-500 line-clamp-3 font-medium">{tmpl.content}</p>
+                                </div>
+                                <Button onClick={() => { setSubject(tmpl.subject); setContent(tmpl.content); setActiveTab("compose"); }} variant="secondary" className="w-full h-11 rounded-full font-bold bg-black text-white hover:bg-gray-800 shadow-lg shadow-black/5">
                                     Use Template
                                 </Button>
                             </Card>
                         ))}
                         {templates.length === 0 && (
-                            <div className="col-span-3 text-center py-12 text-gray-500">
-                                No templates saved yet. Save one from the Compose tab.
+                            <div className="col-span-3 text-center py-20 bg-gray-50/50 rounded-[2.5rem] border border-dashed border-gray-200">
+                                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                                    <FileText className="w-5 h-5 text-gray-400" />
+                                </div>
+                                <p className="text-gray-500 font-medium">No templates saved yet.</p>
+                                <Button variant="link" onClick={() => setActiveTab('compose')} className="text-blue-600 font-bold">
+                                    Create one in Compose
+                                </Button>
                             </div>
                         )}
                     </div>

@@ -265,3 +265,47 @@ export async function deleteSegment(segmentId: string) {
     }
 }
 
+
+export async function createSubscriber(data: { email: string; name?: string; status?: string; tags?: string[] }) {
+    try {
+        const session = await auth();
+        if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+
+        const [newSubscriber] = await db.insert(subscribers).values({
+            userId: session.user.id,
+            email: data.email,
+            name: data.name,
+            status: data.status || 'free',
+            tags: data.tags,
+            source: 'manual'
+        }).returning();
+
+        revalidatePath("/dashboard/subscribers");
+        return { success: true, subscriber: newSubscriber };
+    } catch (error) {
+        console.error("Create subscriber error:", error);
+        return { success: false, error: "Failed to create subscriber" };
+    }
+}
+
+export async function syncSubstack() {
+    try {
+        const session = await auth();
+        if (!session?.user?.id) return { success: false, error: "Unauthorized" };
+
+        // In a real app, this would trigger a background job or fetch from Substack API.
+        // For now, we'll simulate a sync delay and perhaps update a "last synced" timestamp if we had one.
+        // We can also revalidate relevant paths.
+
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate work
+
+        revalidatePath("/dashboard");
+        revalidatePath("/dashboard/subscribers");
+        revalidatePath("/dashboard/analytics");
+
+        return { success: true };
+    } catch (error) {
+        console.error("Sync error:", error);
+        return { success: false, error: "Failed to sync" };
+    }
+}
