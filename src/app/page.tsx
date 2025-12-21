@@ -134,7 +134,7 @@ const DashboardPreview = () => (
                       <div key={i} className="flex-1 relative group h-full flex flex-col justify-end">
                         {/* Tooltip on Wednesday (i=2) */}
                         {i === 2 && (
-                          <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-10">
+                          <div className="absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-10">
                             <div className="bg-gray-900 text-white text-[9px] font-bold px-2 py-1 rounded-md shadow-lg">
                               8.2h
                             </div>
