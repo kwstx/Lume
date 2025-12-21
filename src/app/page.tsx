@@ -88,7 +88,7 @@ const DashboardPreview = () => (
       </div>
 
       {/* Dashboard Content */}
-      <div className="p-8 bg-[#FAFAFB]">
+      <div className="p-4 md:p-8 bg-[#FAFAFB]">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h3 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">Good morning, Creator</h3>
@@ -103,8 +103,8 @@ const DashboardPreview = () => (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Main Chart Card */}
           <div className="col-span-1 md:col-span-2 space-y-6">
-            <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100/50">
-              <div className="flex items-center justify-between mb-8">
+            <div className="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-sm border border-gray-100/50">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div className="space-y-1">
                   <span className="text-sm font-bold text-gray-900">Activity</span>
                   <p className="text-[10px] text-gray-400 font-medium">You logged <span className="text-gray-900">32.2 hours</span> this<br />week — up <span className="text-gray-900">4.3 hours</span> from<br />last month.</p>
@@ -118,17 +118,17 @@ const DashboardPreview = () => (
                 </div>
               </div>
 
-              <div className="flex items-start gap-8">
-                <div className="pt-4">
+              <div className="flex flex-col sm:flex-row items-start gap-8">
+                <div className="pt-0 sm:pt-4 w-full sm:w-auto flex flex-row sm:flex-col justify-between sm:justify-start items-center sm:items-start">
                   <div className="text-4xl font-bold tracking-tight text-gray-900">32.2h</div>
-                  <div className="mt-2 flex items-center gap-1.5 px-2 py-0.5 bg-green-50 rounded-full border border-green-100 w-fit">
+                  <div className="mt-0 sm:mt-2 flex items-center gap-1.5 px-2 py-0.5 bg-green-50 rounded-full border border-green-100 w-fit">
                     <TrendingUp className="w-3 h-3 text-green-500" />
                     <span className="text-[10px] font-bold text-green-500">15%</span>
                     <span className="text-[10px] font-medium text-gray-400">vs last month</span>
                   </div>
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <div className="h-44 w-full relative flex items-end gap-3 px-2">
                     {[45, 60, 85, 45, 75, 55, 65].map((h, i) => (
                       <div key={i} className="flex-1 relative group h-full flex flex-col justify-end">
@@ -172,7 +172,7 @@ const DashboardPreview = () => (
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-50 group hover:border-blue-100 transition-all">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Subscribers</span>
