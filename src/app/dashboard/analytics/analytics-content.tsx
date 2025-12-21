@@ -245,7 +245,18 @@ export default function AnalyticsContent({ metrics, growthData, engagementTrend,
                             </div>
                             <h3 className="font-bold text-lg mb-2">Growth Tip</h3>
                             <p className="text-sm text-white/80 font-medium leading-relaxed mb-4">
-                                Most creators see a 20% bump in opens by sending on Tuesday mornings.
+                                {(() => {
+                                    const openRate = parseInt(metrics?.openRate) || 0;
+                                    const clickRate = parseInt(metrics?.clickRate) || 0;
+                                    const subs = metrics?.totalSubscribers || 0;
+
+                                    if (subs === 0) return "Start by importing your existing contacts or asking 5 friends to subscribe. Your first readers are crucial.";
+                                    if (openRate < 15) return "Your open rate is under 15%. Try personalizing subject lines with the subscriber's name to boost curiosity.";
+                                    if (clickRate < 1) return "Low click rate? Try placing your main link in the 'P.S.' section—it's often the most read part of an email.";
+                                    if (parseInt(metrics?.subscriberTrend) < 0) return "Churn is normal, but high churn means mismatched expectations. Review your welcome email promise.";
+
+                                    return "Tuesday mornings often see the highest engagement rates. Try scheduling your next post for 10 AM ET.";
+                                })()}
                             </p>
                             <Button size="sm" variant="secondary" className="rounded-full bg-white text-violet-600 hover:bg-violet-50 font-bold border-none" onClick={() => window.location.href = '/dashboard/outreach'}>
                                 Schedule Post
