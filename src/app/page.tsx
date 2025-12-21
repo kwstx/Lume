@@ -313,8 +313,8 @@ export default function HomePage() {
                 Segment audiences, track engagement, and boost conversions all in one place.
               </p>
 
-              <div className="relative max-w-md mx-auto mb-16">
-                <div className="flex items-center p-1.5 bg-white rounded-full border border-gray-200 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] focus-within:border-violet-400 focus-within:ring-4 focus-within:ring-violet-500/5 transition-all">
+              <div className="relative max-w-md mx-auto mb-16 w-full">
+                <div className="flex items-center p-1.5 bg-white rounded-full border border-gray-200 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] focus-within:border-violet-400 focus-within:ring-4 focus-within:ring-violet-500/5 transition-all w-full">
                   <input
                     type="email"
                     placeholder="Email"
@@ -325,10 +325,10 @@ export default function HomePage() {
                         router.push(`/login?email=${encodeURIComponent(email)}`);
                       }
                     }}
-                    className="flex-1 bg-transparent border-0 focus:ring-0 px-6 text-sm outline-none text-gray-900 placeholder:text-gray-400"
+                    className="flex-1 bg-transparent border-0 focus:ring-0 px-4 md:px-6 text-sm outline-none text-gray-900 placeholder:text-gray-400 min-w-0"
                   />
                   <Button
-                    className="rounded-full bg-black hover:bg-black/90 text-white px-8 h-12 text-sm font-bold"
+                    className="rounded-full bg-black hover:bg-black/90 text-white px-5 md:px-8 h-12 text-sm font-bold shrink-0"
                     onClick={() => router.push(`/login?email=${encodeURIComponent(email)}`)}
                   >
                     Get Started
