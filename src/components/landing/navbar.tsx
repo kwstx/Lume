@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
-import { Search, Globe } from "lucide-react";
+import { Search, Globe, Menu } from "lucide-react";
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 
 export function LandingNavbar() {
     return (
@@ -22,12 +27,49 @@ export function LandingNavbar() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                    <div className="hidden md:flex">
+                        <Link href="/dashboard">
+                            <Button size="sm" className="rounded-full bg-black hover:bg-gray-900 text-white px-5 font-medium h-9 shadow-lg shadow-black/5">
+                                Dashboard
+                            </Button>
+                        </Link>
+                    </div>
 
-                    <Link href="/dashboard">
-                        <Button size="sm" className="rounded-full bg-black hover:bg-gray-900 text-white px-5 font-medium h-9 shadow-lg shadow-black/5">
-                            Dashboard
-                        </Button>
-                    </Link>
+                    {/* Mobile Menu */}
+                    <div className="md:hidden flex items-center gap-2">
+                        <Link href="/dashboard">
+                            <Button size="sm" className="rounded-full bg-black hover:bg-gray-900 text-white px-4 font-medium h-9 shadow-lg shadow-black/5">
+                                Dashboard
+                            </Button>
+                        </Link>
+
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button variant="ghost" size="icon" className="rounded-full w-9 h-9">
+                                    <Menu className="w-5 h-5" />
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                                <div className="flex flex-col gap-8 mt-8">
+                                    <div className="flex flex-col gap-4">
+                                        <Link href="/#features" className="text-lg font-medium hover:text-violet-600 transition-colors">Features</Link>
+                                        <Link href="/pricing" className="text-lg font-medium hover:text-violet-600 transition-colors">Pricing</Link>
+                                        <Link href="/community" className="text-lg font-medium hover:text-violet-600 transition-colors">Community</Link>
+                                        <Link href="/contact" className="text-lg font-medium hover:text-violet-600 transition-colors">Contact</Link>
+                                    </div>
+                                    <div className="h-px bg-gray-100" />
+                                    <div className="flex flex-col gap-4">
+                                        <Link href="/login">
+                                            <Button variant="outline" className="w-full rounded-full h-11">Log In</Button>
+                                        </Link>
+                                        <Link href="/dashboard">
+                                            <Button className="w-full rounded-full h-11 bg-black text-white hover:bg-gray-800">Get Started</Button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </SheetContent>
+                        </Sheet>
+                    </div>
                 </div>
             </nav >
         </div >

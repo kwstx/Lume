@@ -313,7 +313,7 @@ export default function HomePage() {
                 Segment audiences, track engagement, and boost conversions all in one place.
               </p>
 
-              <div className="relative max-w-md mx-auto mb-16 w-full">
+              <div className="relative max-w-lg mx-auto mb-16 w-full">
                 <div className="flex items-center p-1.5 bg-white rounded-full border border-gray-200 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] focus-within:border-violet-400 focus-within:ring-4 focus-within:ring-violet-500/5 transition-all w-full">
                   <input
                     type="email"
