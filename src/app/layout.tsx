@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Lume - CRM for Substack Creators",
   description: "Turn your Substack subscribers into lasting relationships. The CRM built exclusively for newsletter creators.",
+  icons: {
+    icon: [
+      { url: '/logo.svg', href: '/logo.svg' },
+    ],
+  },
 };
 
 export default function RootLayout({
