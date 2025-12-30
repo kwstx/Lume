@@ -18,6 +18,7 @@ import {
   ShoppingBag,
   Receipt,
   Home,
+  Mail,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Logo } from "@/components/ui/logo";
@@ -25,6 +26,7 @@ import { Logo } from "@/components/ui/logo";
 const navigation = [
   { name: "Home", href: "/dashboard", icon: Home },
   { name: "Customers", href: "/dashboard/subscribers", icon: Users },
+  { name: "Campaigns", href: "/dashboard/campaigns", icon: Mail },
   { name: "Reports", href: "/dashboard/analytics", icon: BarChart3 },
   { name: "Connect", href: "/dashboard/outreach", icon: MessageSquare },
   { name: "Personas", href: "/dashboard/personas", icon: UserCircle },
@@ -34,11 +36,11 @@ const bottomNav = [
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ className }: { className?: string }) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-card border-r border-border flex flex-col">
+    <aside className={cn("h-screen w-64 bg-card border-r border-border flex flex-col", className)}>
       <div className="p-6">
         <Link href="/" className="flex items-center gap-2">
           <Logo className="w-8 h-8 text-violet-600" />

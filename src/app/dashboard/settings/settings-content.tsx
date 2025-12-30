@@ -15,7 +15,11 @@ import {
     Download,
     Settings,
     Sparkles,
+    Key,
+    Webhook,
+    ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
 import { AvatarUploader } from "@/components/settings/avatar-uploader";
 import { ConnectSubstackDialog } from "@/components/settings/connect-substack-dialog";
 import { updateProfile, exportAccountData, deleteAccount } from "@/actions/user";
@@ -244,96 +248,134 @@ export default function SettingsContent({ user }: SettingsContentProps) {
                             ))}
                         </div>
                     </Card>
-                </div>
+                </Card>
 
-                <div className="col-span-12 lg:col-span-4 space-y-6">
-                    <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-8 border border-gray-100/50">
-                        <CardTitle className="text-xl font-bold mb-8">Notifications</CardTitle>
-                        <div className="space-y-4">
-                            {[
-                                { label: "Email Alerts", icon: Mail, checked: true, desc: "Get updates on new subscribers" },
-                                { label: "Push Notifications", icon: Smartphone, checked: false, desc: "Real-time mobile alerts" },
-                                { label: "Weekly Digest", icon: Globe, checked: true, desc: "Summary of your performance" },
-                            ].map((item) => (
-                                <div key={item.label} className="flex items-center justify-between p-4 rounded-3xl bg-gray-50/50 border border-gray-100/50 hover:border-gray-200 transition-colors">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 text-gray-500">
-                                            <item.icon className="w-5 h-5" />
-                                        </div>
-                                        <div>
-                                            <span className="text-sm font-bold text-gray-900 block">{item.label}</span>
-                                            <span className="text-xs font-medium text-gray-400">{item.desc}</span>
-                                        </div>
+                <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-8 border border-gray-100/50">
+                    <div className="flex items-center justify-between mb-8">
+                        <CardTitle className="text-xl font-bold">Developers</CardTitle>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Link href="/dashboard/settings/api" className="group">
+                            <div className="p-6 rounded-[2rem] border border-gray-50 bg-gray-50/30 hover:bg-white hover:border-violet-100 hover:shadow-lg hover:shadow-violet-100/20 transition-all cursor-pointer h-full flex flex-col justify-between">
+                                <div className="mb-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 mb-4 group-hover:scale-110 transition-transform">
+                                        <Key className="w-6 h-6 text-violet-500" />
                                     </div>
-                                    <Switch defaultChecked={item.checked} className="data-[state=checked]:bg-black" />
+                                    <h3 className="font-bold text-gray-900 mb-1">API Access</h3>
+                                    <p className="text-sm text-gray-400 font-medium">Manage API keys for external access.</p>
                                 </div>
-                            ))}
+                                <div className="flex items-center text-violet-600 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    Manage Keys <ChevronRight className="w-4 h-4 ml-1" />
+                                </div>
+                            </div>
+                        </Link>
+
+                        <Link href="/dashboard/settings/webhooks" className="group">
+                            <div className="p-6 rounded-[2rem] border border-gray-50 bg-gray-50/30 hover:bg-white hover:border-pink-100 hover:shadow-lg hover:shadow-pink-100/20 transition-all cursor-pointer h-full flex flex-col justify-between">
+                                <div className="mb-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 mb-4 group-hover:scale-110 transition-transform">
+                                        <Webhook className="w-6 h-6 text-pink-500" />
+                                    </div>
+                                    <h3 className="font-bold text-gray-900 mb-1">Webhooks</h3>
+                                    <p className="text-sm text-gray-400 font-medium">Real-time event notifications.</p>
+                                </div>
+                                <div className="flex items-center text-pink-600 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    Configure <ChevronRight className="w-4 h-4 ml-1" />
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </Card>
+            </div>
+
+            <div className="col-span-12 lg:col-span-4 space-y-6">
+                <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-8 border border-gray-100/50">
+                    <CardTitle className="text-xl font-bold mb-8">Notifications</CardTitle>
+                    <div className="space-y-4">
+                        {[
+                            { label: "Email Alerts", icon: Mail, checked: true, desc: "Get updates on new subscribers" },
+                            { label: "Push Notifications", icon: Smartphone, checked: false, desc: "Real-time mobile alerts" },
+                            { label: "Weekly Digest", icon: Globe, checked: true, desc: "Summary of your performance" },
+                        ].map((item) => (
+                            <div key={item.label} className="flex items-center justify-between p-4 rounded-3xl bg-gray-50/50 border border-gray-100/50 hover:border-gray-200 transition-colors">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-gray-100 text-gray-500">
+                                        <item.icon className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <span className="text-sm font-bold text-gray-900 block">{item.label}</span>
+                                        <span className="text-xs font-medium text-gray-400">{item.desc}</span>
+                                    </div>
+                                </div>
+                                <Switch defaultChecked={item.checked} className="data-[state=checked]:bg-black" />
+                            </div>
+                        ))}
+                    </div>
+                </Card>
+
+                <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-8 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-500 to-orange-600 opacity-100 transition-transform duration-700" />
+                    <div className="absolute top-0 right-0 -mr-12 -mt-12 w-48 h-48 bg-white/10 rounded-full blur-3xl opacity-50" />
+
+                    <div className="relative z-10 space-y-6 text-white">
+                        <div className="bg-white/20 backdrop-blur-md w-14 h-14 rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+                            <Trash2 className="w-7 h-7" />
                         </div>
-                    </Card>
-
-                    <Card className="border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white rounded-[2.5rem] p-8 relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-rose-500 to-orange-600 opacity-100 transition-transform duration-700" />
-                        <div className="absolute top-0 right-0 -mr-12 -mt-12 w-48 h-48 bg-white/10 rounded-full blur-3xl opacity-50" />
-
-                        <div className="relative z-10 space-y-6 text-white">
-                            <div className="bg-white/20 backdrop-blur-md w-14 h-14 rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
-                                <Trash2 className="w-7 h-7" />
-                            </div>
-                            <div className="space-y-2">
-                                <h3 className="text-2xl font-bold tracking-tight">Danger Zone</h3>
-                                <p className="text-white/90 text-sm font-medium leading-relaxed">
-                                    Irreversible actions. Deleting your account will permanently remove all your data.
-                                </p>
-                            </div>
-                            <div className="space-y-3 pt-2">
-                                <Button
-                                    variant="outline"
-                                    className="w-full h-12 rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 font-bold backdrop-blur-sm border-2"
-                                    onClick={async () => {
-                                        toast.info("Preparing export...");
-                                        const result = await exportAccountData();
-                                        if (result.success && result.data) {
-                                            const blob = new Blob([result.data], { type: 'application/json' });
-                                            const url = URL.createObjectURL(blob);
-                                            const a = document.createElement('a');
-                                            a.href = url;
-                                            a.download = `orchids-crm-export-${new Date().toISOString().split('T')[0]}.json`;
-                                            document.body.appendChild(a);
-                                            a.click();
-                                            document.body.removeChild(a);
-                                            URL.revokeObjectURL(url);
-                                            toast.success("Export downloaded!");
+                        <div className="space-y-2">
+                            <h3 className="text-2xl font-bold tracking-tight">Danger Zone</h3>
+                            <p className="text-white/90 text-sm font-medium leading-relaxed">
+                                Irreversible actions. Deleting your account will permanently remove all your data.
+                            </p>
+                        </div>
+                        <div className="space-y-3 pt-2">
+                            <Button
+                                variant="outline"
+                                className="w-full h-12 rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 font-bold backdrop-blur-sm border-2"
+                                onClick={async () => {
+                                    toast.info("Preparing export...");
+                                    const result = await exportAccountData();
+                                    if (result.success && result.data) {
+                                        const blob = new Blob([result.data], { type: 'application/json' });
+                                        const url = URL.createObjectURL(blob);
+                                        const a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = `orchids-crm-export-${new Date().toISOString().split('T')[0]}.json`;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        document.body.removeChild(a);
+                                        URL.revokeObjectURL(url);
+                                        toast.success("Export downloaded!");
+                                    } else {
+                                        toast.error("Failed to export data");
+                                    }
+                                }}
+                            >
+                                <Download className="w-4 h-4 mr-2" />
+                                Export All Data
+                            </Button>
+                            <Button
+                                variant="destructive"
+                                className="w-full h-12 rounded-full bg-white text-rose-600 hover:bg-white/90 font-bold border-none shadow-xl shadow-black/10"
+                                onClick={async () => {
+                                    if (confirm("Are you SURE you want to delete your account? This action is irreversible.")) {
+                                        const result = await deleteAccount();
+                                        if (result.success) {
+                                            toast.success("Account deleted. Redirecting...");
+                                            // Hard reload to force sign out / redirect to auth
+                                            window.location.href = "/";
                                         } else {
-                                            toast.error("Failed to export data");
+                                            toast.error("Failed to delete account");
                                         }
-                                    }}
-                                >
-                                    <Download className="w-4 h-4 mr-2" />
-                                    Export All Data
-                                </Button>
-                                <Button
-                                    variant="destructive"
-                                    className="w-full h-12 rounded-full bg-white text-rose-600 hover:bg-white/90 font-bold border-none shadow-xl shadow-black/10"
-                                    onClick={async () => {
-                                        if (confirm("Are you SURE you want to delete your account? This action is irreversible.")) {
-                                            const result = await deleteAccount();
-                                            if (result.success) {
-                                                toast.success("Account deleted. Redirecting...");
-                                                // Hard reload to force sign out / redirect to auth
-                                                window.location.href = "/";
-                                            } else {
-                                                toast.error("Failed to delete account");
-                                            }
-                                        }
-                                    }}
-                                >
-                                    Delete Account
-                                </Button>
-                            </div>
+                                    }
+                                }}
+                            >
+                                Delete Account
+                            </Button>
                         </div>
-                    </Card>
-                </div>
+                    </div>
+                </Card>
             </div>
         </div>
+        </div >
     );
 }

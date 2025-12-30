@@ -6,6 +6,7 @@ import {
     integer,
     boolean,
     jsonb,
+    index,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -25,6 +26,8 @@ export const users = pgTable("user", {
     stripeCustomerId: text("stripe_customer_id"),
     newsletterName: text("newsletter_name"),
     timezone: text("timezone").default("UTC"),
+    onboardingCompleted: boolean("onboarding_completed").default(false),
+    demoMode: boolean("demo_mode").default(false),
     createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -72,7 +75,7 @@ export const subscribers = pgTable("subscribers", {
     name: text("name"),
     status: text("status").default("free"), // 'free', 'paid', 'comp'
     tier: text("tier").default("free"), // 'founding', 'annual', 'monthly'
-    source: text("source"), // 'import', 'api', 'manual'
+    source: text("source"), // 'import', 'api', 'manual', 'substack_sync'
     substackId: text("substack_id"), // Original ID from Substack if available
     joinDate: timestamp("join_date"),
     engagementLevel: text("engagement_level"), // 'high', 'medium', 'low', 'churned'
@@ -81,9 +84,15 @@ export const subscribers = pgTable("subscribers", {
     lastActive: timestamp("last_active"),
     notes: text("notes"),
     tags: jsonb("tags").$type<string[]>(), // e.g. ["interested-in-tech", "vip"]
+    rfmScore: integer("rfm_score").default(0), // 100-500 score based on Recency, Frequency, Monetary
+    churnRisk: integer("churn_risk").default(0), // 0-100% risk score
     createdAt: timestamp("created_at").defaultNow(),
     updatedAt: timestamp("updated_at").defaultNow(),
-});
+}, (table) => [
+    index("subscribers_user_id_idx").on(table.userId),
+    index("subscribers_email_idx").on(table.email),
+    index("subscribers_engagement_idx").on(table.engagementLevel),
+]);
 
 // Groups/Segments of subscribers
 export const segments = pgTable("segments", {
@@ -92,9 +101,11 @@ export const segments = pgTable("segments", {
     name: text("name").notNull(),
     description: text("description"),
     criteria: jsonb("criteria"), // Logic for auto-segmentation e.g. { "min_opens": 5 }
-    type: text("type").default("manual"), // 'manual' or 'dynamic'
+    type: text("type").default("manual"), // 'manual', 'dynamic', 'behavioral', 'rfm', 'predictive'
     createdAt: timestamp("created_at").defaultNow(),
-});
+}, (table) => [
+    index("segments_user_id_idx").on(table.userId),
+]);
 
 // Mapping subscribers to segments
 export const subscriberSegments = pgTable("subscriber_segments", {
@@ -125,7 +136,10 @@ export const interactions = pgTable("interactions", {
     type: text("type").notNull(), // 'open', 'click', 'reply', 'comment'
     date: timestamp("date").defaultNow(),
     details: jsonb("details"), // { "url": "...", "post_title": "..." }
-});
+}, (table) => [
+    index("interactions_subscriber_id_idx").on(table.subscriberId),
+    index("interactions_date_idx").on(table.date),
+]);
 
 // Products (Plans/Items sold)
 export const products = pgTable("products", {
@@ -174,12 +188,12 @@ export const invoices = pgTable("invoices", {
     invoiceUrl: text("invoice_url"),
 });
 
-// Outreach Campaigns
+// Outreach Campaigns (Basic version - will be extended)
 export const campaigns = pgTable("campaigns", {
     id: uuid("id").defaultRandom().primaryKey(),
     userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
-    status: text("status").default("draft"), // 'draft', 'scheduled', 'active', 'completed'
+    status: text("status").default("draft"), // 'draft', 'scheduled', 'sending', 'sent', 'failed'
     type: text("type").default("one-time"), // 'one-time', 'automated'
     subject: text("subject"),
     content: text("content"),
@@ -188,7 +202,10 @@ export const campaigns = pgTable("campaigns", {
     clickRate: integer("click_rate").default(0),
     scheduledFor: timestamp("scheduled_for"),
     createdAt: timestamp("created_at").defaultNow(),
-});
+}, (table) => [
+    index("campaigns_user_id_idx").on(table.userId),
+    index("campaigns_status_idx").on(table.status),
+]);
 
 // Messages (Inbox/Chat with Subscribers)
 export const messages = pgTable("messages", {
@@ -198,4 +215,135 @@ export const messages = pgTable("messages", {
     content: text("content").notNull(),
     isRead: boolean("is_read").default(false),
     sentAt: timestamp("sent_at").defaultNow(),
+});
+
+// --- NEW TABLES FOR ENHANCED FEATURES ---
+
+// Email Campaign Templates
+export const emailTemplates = pgTable("email_templates", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    subject: text("subject"),
+    content: text("content").notNull(),
+    thumbnail: text("thumbnail"),
+    isPublic: boolean("is_public").default(false), // Public templates available to all users
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Campaign Analytics (detailed tracking)
+export const campaignAnalytics = pgTable("campaign_analytics", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    campaignId: uuid("campaign_id").references(() => campaigns.id, { onDelete: "cascade" }),
+    subscriberId: uuid("subscriber_id").references(() => subscribers.id, { onDelete: "cascade" }),
+    sent: boolean("sent").default(false),
+    opened: boolean("opened").default(false),
+    clicked: boolean("clicked").default(false),
+    bounced: boolean("bounced").default(false),
+    unsubscribed: boolean("unsubscribed").default(false),
+    openedAt: timestamp("opened_at"),
+    clickedAt: timestamp("clicked_at"),
+    sentAt: timestamp("sent_at").defaultNow(),
+}, (table) => [
+    index("campaign_analytics_campaign_id_idx").on(table.campaignId),
+    index("campaign_analytics_subscriber_id_idx").on(table.subscriberId),
+]);
+
+// API Keys for integrations
+export const apiKeys = pgTable("api_keys", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    key: text("key").notNull().unique(), // Hashed API key
+    lastUsed: timestamp("last_used"),
+    expiresAt: timestamp("expires_at"),
+    createdAt: timestamp("created_at").defaultNow(),
+}, (table) => [
+    index("api_keys_user_id_idx").on(table.userId),
+    index("api_keys_key_idx").on(table.key),
+]);
+
+// Webhooks
+export const webhooks = pgTable("webhooks", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    url: text("url").notNull(),
+    events: jsonb("events").$type<string[]>(), // ['subscriber.created', 'payment.succeeded']
+    secret: text("secret"), // For webhook signature verification
+    isActive: boolean("is_active").default(true),
+    createdAt: timestamp("created_at").defaultNow(),
+}, (table) => [
+    index("webhooks_user_id_idx").on(table.userId),
+]);
+
+// Webhook Events Log
+export const webhookEvents = pgTable("webhook_events", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    webhookId: uuid("webhook_id").references(() => webhooks.id, { onDelete: "cascade" }),
+    event: text("event").notNull(),
+    payload: jsonb("payload"),
+    status: text("status").default("pending"), // 'pending', 'delivered', 'failed'
+    attempts: integer("attempts").default(0),
+    lastAttemptAt: timestamp("last_attempt_at"),
+    deliveredAt: timestamp("delivered_at"),
+    createdAt: timestamp("created_at").defaultNow(),
+}, (table) => [
+    index("webhook_events_webhook_id_idx").on(table.webhookId),
+    index("webhook_events_status_idx").on(table.status),
+]);
+
+// Third-party Integrations
+export const integrations = pgTable("integrations", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    provider: text("provider").notNull(), // 'slack', 'notion', 'airtable', etc.
+    credentials: jsonb("credentials"), // Encrypted credentials
+    config: jsonb("config"), // Integration-specific configuration
+    isActive: boolean("is_active").default(true),
+    lastSyncAt: timestamp("last_sync_at"),
+    createdAt: timestamp("created_at").defaultNow(),
+}, (table) => [
+    index("integrations_user_id_idx").on(table.userId),
+]);
+
+// Substack Connections
+export const substackConnections = pgTable("substack_connections", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }).unique(),
+    substackUrl: text("substack_url").notNull(),
+    accessToken: text("access_token"), // Encrypted
+    refreshToken: text("refresh_token"), // Encrypted
+    connectionMethod: text("connection_method"), // 'oauth', 'email_forward', 'csv'
+    lastSyncAt: timestamp("last_sync_at"),
+    syncStatus: text("sync_status").default("pending"), // 'pending', 'syncing', 'success', 'failed'
+    syncError: text("sync_error"),
+    createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Export Jobs (for background processing)
+export const exportJobs = pgTable("export_jobs", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(), // 'subscribers', 'segments', 'campaigns', 'full_account'
+    format: text("format").notNull(), // 'csv', 'json'
+    status: text("status").default("pending"), // 'pending', 'processing', 'completed', 'failed'
+    fileUrl: text("file_url"),
+    error: text("error"),
+    createdAt: timestamp("created_at").defaultNow(),
+    completedAt: timestamp("completed_at"),
+}, (table) => [
+    index("export_jobs_user_id_idx").on(table.userId),
+    index("export_jobs_status_idx").on(table.status),
+]);
+
+// Onboarding Progress
+export const onboardingProgress = pgTable("onboarding_progress", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }).unique(),
+    currentStep: integer("current_step").default(0),
+    completedSteps: jsonb("completed_steps").$type<string[]>(),
+    skipped: boolean("skipped").default(false),
+    completedAt: timestamp("completed_at"),
+    createdAt: timestamp("created_at").defaultNow(),
 });

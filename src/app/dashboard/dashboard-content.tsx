@@ -10,6 +10,7 @@ import {
     Activity,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { OnboardingWidget } from "@/components/onboarding/onboarding-widget";
 
 const retentionData = [
     { name: "Jan", value: 0 },
@@ -44,17 +45,25 @@ const customersData = [
 interface DashboardContentProps {
     metrics: {
         totalSubscribers: number;
+        subscriberTrend: string;
         paidSubscribers: number;
+        paidTrend: string;
         grossVolume: number;
-        trends: any[];
-        activity?: { name: string; value: number }[];
-        topPersonas?: { name: string; val: number; color: string }[];
+        volumeTrend: string;
+        openRate: string;
+        openRateTrend: string;
+        clickRate: string;
+        clickRateTrend: string;
+        activity: { name: string; value: number }[];
+        topPersonas: { name: string; val: number; color: string }[];
+        trends?: any[]; // optional if still used elsewhere
     };
     range?: string;
+    onboardingProgress?: any;
 }
 
-export default function DashboardContent({ metrics, range = 'week' }: DashboardContentProps) {
-    const { trends = [], totalSubscribers = 0, paidSubscribers = 0, grossVolume = 0 } = metrics || {};
+export default function DashboardContent({ metrics, range = 'week', onboardingProgress }: DashboardContentProps) {
+    const { totalSubscribers = 0, paidSubscribers = 0, grossVolume = 0 } = metrics || {};
 
     const openRate = metrics?.openRate || "0%";
     const subscriberGrowth = metrics?.subscriberTrend || "+0%";
@@ -68,6 +77,7 @@ export default function DashboardContent({ metrics, range = 'week' }: DashboardC
 
     return (
         <div className="space-y-6">
+            <OnboardingWidget progress={onboardingProgress} />
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Good morning, Creator</h1>

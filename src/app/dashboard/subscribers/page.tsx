@@ -1,44 +1,61 @@
+import { auth } from "@/auth";
 import { getSubscribers, getSegments } from "@/actions/subscribers";
 import SubscribersContent from "./subscribers-content";
+import { redirect } from "next/navigation";
 
-export default async function SubscribersPage({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const filters = {
-    query: typeof searchParams.query === 'string' ? searchParams.query : undefined,
-    status: typeof searchParams.status === 'string' ? searchParams.status : undefined,
-    engagement: typeof searchParams.engagement === 'string' ? searchParams.engagement : undefined,
-    segmentId: typeof searchParams.segment === 'string' ? searchParams.segment : undefined,
-  };
+  const session = await auth();
+  // if (!session) redirect("/login"); 
 
-  const [subscribersResult, segmentsResult] = await Promise.all([
-    getSubscribers(filters),
-    getSegments() // Assuming this action exists and is imported
-  ]);
+  const resolvedSearchParams = await searchParams;
 
-  const data = subscribersResult.data || [];
-  const segments = segmentsResult.data || [];
+  const page = Number(resolvedSearchParams?.page) || 1;
+  const limit = 20;
 
-  // Transform DB data to match UI component props
-  const formattedSubscribers = data.map((sub: any) => ({
+  const { data: rawSubscribers, count, error } = await getSubscribers({
+    query: typeof resolvedSearchParams.query === 'string' ? resolvedSearchParams.query : undefined,
+    status: typeof resolvedSearchParams.status === 'string' ? resolvedSearchParams.status : undefined,
+    engagement: typeof resolvedSearchParams.engagement === 'string' ? resolvedSearchParams.engagement : undefined,
+    segmentId: typeof resolvedSearchParams.segmentId === 'string' ? resolvedSearchParams.segmentId : undefined,
+    risk: typeof resolvedSearchParams.risk === 'string' ? resolvedSearchParams.risk : undefined,
+    page,
+    limit
+  });
+
+  const { data: segments } = await getSegments();
+
+  // Map DB result to UI Interface
+  const subscribers = rawSubscribers?.map(sub => ({
     id: sub.id,
     name: sub.name,
     email: sub.email,
     status: sub.status,
-    engagement: sub.engagementLevel || 'low',
-    openRate: Math.round(((sub.totalOpens || 0) / 10) * 100),
-    joinedDate: sub.joinDate,
+    engagementLevel: sub.engagementLevel,
+    openRate: sub.totalOpens ? Math.min(100, Math.round((sub.totalOpens / 10) * 10)) : 0, // Mock calculation
+    joinDate: sub.joinDate,
     lastActive: sub.lastActive,
-    avatar: null,
-  }));
+    rfmScore: sub.rfmScore,
+    churnRisk: sub.churnRisk,
+    avatar: null
+  })) || [];
 
   return (
     <SubscribersContent
-      initialSubscribers={formattedSubscribers}
-      initialSegments={segments}
-      initialFilters={filters}
+      initialSubscribers={subscribers}
+      totalCount={count || 0}
+      initialSegments={segments || []}
+      initialFilters={{
+        query: typeof resolvedSearchParams.query === 'string' ? resolvedSearchParams.query : undefined,
+        status: typeof resolvedSearchParams.status === 'string' ? resolvedSearchParams.status : undefined,
+        engagement: typeof resolvedSearchParams.engagement === 'string' ? resolvedSearchParams.engagement : undefined,
+        segmentId: typeof resolvedSearchParams.segmentId === 'string' ? resolvedSearchParams.segmentId : undefined,
+        risk: typeof resolvedSearchParams.risk === 'string' ? resolvedSearchParams.risk : undefined,
+        page
+      }}
     />
   );
 }
